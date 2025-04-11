@@ -27,7 +27,7 @@ public class TestFAQ {
         mainPage.openMainPage();
 
         // нажимаем куки
-        mainPage.clickCookie();
+        mainPage.clickCookie(); // может это лишнее...
 
         // ищем FAQ
         mainPage.scrollAndClickArrow();

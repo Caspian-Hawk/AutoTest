@@ -53,7 +53,7 @@ public class TestButtonOrderUp { // флоу верхней кнопки "Зак
         // открываем страницу
         mainPage.openMainPage();
         // принимаем куки
-        mainPage.clickCookie();
+        mainPage.clickCookie(); // может это лишнее...
 
         // кликаем по верхней кнопке Заказать
         mainPage.clickOrderButtonUp();

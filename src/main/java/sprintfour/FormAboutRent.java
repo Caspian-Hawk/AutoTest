@@ -43,7 +43,7 @@ public class FormAboutRent {
 
     public void checkOrderComplete() {
         By orderComplete = By.xpath("/html/body/div/div/div[2]/div[5]");
-        // ждем, на всякий случай
+        // ждем, на всякий случай...
         new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(orderComplete));
         // проверяем окно Заказ оформлен
         assertTrue(driver.findElement(orderComplete).isDisplayed());

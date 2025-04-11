@@ -54,7 +54,7 @@ public class FirefoxTestButtonOrderUp { // флоу верхней кнопки 
         //MainPage.open();
         mainPage.openMainPage();
         // принимаем куки
-        mainPage.clickCookie();
+        mainPage.clickCookie(); // может это лишнее...
 
         // кликаем по верхней кнопке Заказать
         mainPage.clickOrderButtonUp();

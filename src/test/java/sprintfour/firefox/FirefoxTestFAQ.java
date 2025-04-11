@@ -27,7 +27,7 @@ public class FirefoxTestFAQ {
         mainPage.openMainPage();
 
         // принимаем куки
-        mainPage.clickCookie();
+        mainPage.clickCookie(); // может это лишнее...
 
         // ищем FAQ
         mainPage.scrollAndClickArrow();

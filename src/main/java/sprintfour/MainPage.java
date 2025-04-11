@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 public class MainPage {
     private final WebDriver driver;
-
+// кнопка cookie
     private final By buttonCookie = By.className("App_CookieButton__3cvqF");
     private final By buttonOrderUp = By.xpath("//*[@id=\"root\"]/div/div/div[1]/div[2]/button[1]");
 
