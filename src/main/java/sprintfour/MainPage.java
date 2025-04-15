@@ -4,14 +4,43 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
 
 import static org.junit.Assert.assertTrue;
 
+// локаторы главной страницы
 public class MainPage {
     private final WebDriver driver;
-
+    // кнопка cookie
     private final By buttonCookie = By.className("App_CookieButton__3cvqF");
-    private final By buttonOrderUp = By.xpath("//*[@id=\"root\"]/div/div/div[1]/div[2]/button[1]");
+    // верхняя кнопка Заказать
+    private final By buttonOrderUp = By.xpath("//*[@id=\"root\"]/div/div[1]/div[1]/div[2]/button[1]");
+
+    // идентификаторы вопросов FAQ
+    private final String[] questionIds = {
+            "accordion__heading-0",
+            "accordion__heading-1",
+            "accordion__heading-2",
+            "accordion__heading-3",
+            "accordion__heading-4",
+            "accordion__heading-5",
+            "accordion__heading-6",
+            "accordion__heading-7"
+    };
+
+    // идентификаторы ответов FAQ
+    private final String[] answerIds = {
+            "accordion__panel-0",
+            "accordion__panel-1",
+            "accordion__panel-2",
+            "accordion__panel-3",
+            "accordion__panel-4",
+            "accordion__panel-5",
+            "accordion__panel-6",
+            "accordion__panel-7"
+    };
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
@@ -25,28 +54,42 @@ public class MainPage {
         driver.findElement(buttonCookie).click();
     }
 
-    public void clickOrderButtonUp() {
+    public void clickButtonOrderUp() {
         driver.findElement(buttonOrderUp).click();
     }
 
     public void clickButtonOrderDown() {
-        WebElement buttonOrderDown = driver.findElement(By.xpath("/html/body/div/div/div/div[4]/div[2]/div[5]/button"));
-        // скролим вниз, ищем кнопку Заказать
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", buttonOrderDown);
-        // кликаем
+        WebElement buttonOrderDown = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[1]/div[4]/div[2]/div[5]/button"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", buttonOrderDown);
         buttonOrderDown.click();
     }
 
-    public void scrollAndClickArrow() {
-        WebElement firstQuestion = driver.findElement(By.xpath("//*[@id=\"accordion__heading-0\"]"));
-        // скролим вниз, ищем стрелку FAQ
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", firstQuestion);
-        // кликаем
-        firstQuestion.click();
+    public void scrollAndClickQuestionFAQ(String elementId) {
+        WebElement questionElement = driver.findElement(By.id(elementId));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", questionElement);
+        questionElement.click();
     }
 
-    public void checkFirstAnswer() {
-        By firstAnswer = By.xpath("/html/body/div/div/div/div[5]/div[2]/div/div[1]/div[2]/p");
-        assertTrue(driver.findElement(firstAnswer).isDisplayed());
+    public void clickAllQuestions() {
+        for (String questionId : questionIds) {
+            scrollAndClickQuestionFAQ(questionId);
+        }
+    }
+
+    public void checkAllAnswers() {
+        for (String answerId : answerIds) {
+            By answerLocator = By.id(answerId);
+            new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(answerLocator));
+            assertTrue(driver.findElement(answerLocator).isDisplayed());
+        }
+    }
+
+    public void checkQuestionAnswerMatch() {
+        for (int i = 0; i < questionIds.length; i++) {
+            scrollAndClickQuestionFAQ(questionIds[i]);
+            By answerLocator = By.id(answerIds[i]);
+            new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(answerLocator));
+            assertTrue("Ответ на вопрос с ID: " + questionIds[i] + " не отображается.", driver.findElement(answerLocator).isDisplayed());
+        }
     }
 }

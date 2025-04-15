@@ -9,14 +9,21 @@ import java.time.Duration;
 
 import static org.junit.Assert.assertTrue;
 
+// локаторы для формы Про аренду
 public class FormAboutRent {
     private final WebDriver driver;
-
+    // поле Дата(не могу понять почему через class и cssSelector не находит, хотя на странице и то и другое уникальны)
+    // private final By fieldDate = By.cssSelector("input[placeholder='* Когда привезут самокат']");
     private final By fieldDate = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[1]/div[1]/div/input");
-    private final By deskDate = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[1]/div[2]/div[2]/div/div/div[2]/div[2]/div[3]/div[4]");
+    // календарь
+    private final By deskDate = By.className("react-datepicker__day--018");
+    // поле Срок аренды
     private final By fieldRent = By.className("Dropdown-placeholder");
+    // список Срока аренды
     private final By listRent = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[2]/div[2]/div[1]");
+    // кнопка Заказать формы Про аренду
     private final By buttonOrderForm = By.xpath("//*[@id=\"root\"]/div/div[2]/div[3]/button[2]");
+    // кнопка Да формы Про аренду
     private final By buttonYes = By.xpath("//*[@id=\"root\"]/div/div[2]/div[5]/div[2]/button[2]");
 
     public FormAboutRent(WebDriver driver) {
@@ -42,7 +49,7 @@ public class FormAboutRent {
     }
 
     public void checkOrderComplete() {
-        By orderComplete = By.xpath("/html/body/div/div/div[2]/div[5]");
+        By orderComplete = By.className("Order_ModalHeader__3FDaJ");
         // ждем, на всякий случай...
         new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(orderComplete));
         // проверяем окно Заказ оформлен

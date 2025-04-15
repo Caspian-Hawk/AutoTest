@@ -1,51 +1,42 @@
-package sprintfour.chrome;
+package sprintfour;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import sprintfour.FormAboutRent;
-import sprintfour.FormAboutUser;
-import sprintfour.MainPage;
-
-import java.time.Duration;
 
 @RunWith(Parameterized.class)
-public class TestButtonOrderUp { // флоу верхней кнопки "Заказать"
-    private WebDriver driver;
+public class TestOrderFrame { // флоу верхней кнопки "Заказать"
 
     private final String name;
     private final String surname;
     private final String address;
     private final String telephone;
+    private final String buttonType;
 
-    public TestButtonOrderUp(String name, String surname, String address, String telephone) {
+    public TestOrderFrame(String name, String surname, String address, String telephone, String buttonType) {
         this.name = name;
         this.surname = surname;
         this.address = address;
         this.telephone = telephone;
+        this.buttonType = buttonType;
     }
 
     @Parameterized.Parameters
     public static Object[][] userData() {
         return new Object[][] {
-                {"Роман", "Карасев", "Калининская", "89001112233"},
-                {"Алексей", "Петров", "Ленина", "89001234567"},
+                {"Роман", "Карасев", "Калининская", "89001112233", "up"},
+                {"Алексей", "Петров", "Ленина", "89001234567", "down"},
         };
     }
 
-    @Before
-    public void StartUp() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-    }
+    @Rule
+    public DriverRule driverRule = new DriverRule();
 
     @Test
-    public void checkButtonOrderUp() throws InterruptedException {
+    public void checkButtonOrderUp() {
+        WebDriver driver = driverRule.getDriver();
         var mainPage = new MainPage(driver);
         var formAboutUser = new FormAboutUser(driver);
         var formAboutRent = new FormAboutRent(driver);
@@ -55,8 +46,11 @@ public class TestButtonOrderUp { // флоу верхней кнопки "Зак
         // принимаем куки
         mainPage.clickCookie(); // может это лишнее...
 
-        // кликаем по верхней кнопке Заказать
-        mainPage.clickOrderButtonUp();
+        if (buttonType.equals("up")) {
+            mainPage.clickButtonOrderUp();
+        } else {
+            mainPage.clickButtonOrderDown();
+        }
 
         // форма "Для кого самокат"
         // заполняем поле Имя
@@ -87,12 +81,5 @@ public class TestButtonOrderUp { // флоу верхней кнопки "Зак
         formAboutRent.clickButtonYes();
 
         formAboutRent.checkOrderComplete();
-
-        // закрываем браузер
-        driver.close();
-    }
-
-    public void tearDown() {
-        driver.quit();
     }
 }

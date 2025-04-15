@@ -3,16 +3,23 @@ package sprintfour;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+// локаторы формы Для кого самокат
 public class FormAboutUser {
     private final WebDriver driver;
     // поле Имя
-    private final By fieldName = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[1]/input");
-    private final By fieldSurname = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[2]/input");
-    private final By fieldAddress = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[3]/input");
+    private final By fieldName = By.cssSelector("input[placeholder='* Имя']");
+    // поле Фамилия
+    private final By fieldSurname = By.cssSelector("input[placeholder='* Фамилия']");
+    // поле Адрес
+    private final By fieldAddress = By.cssSelector("input[placeholder='* Адрес: куда привезти заказ']");
+    // поле Станция
     private final By fieldStation = By.className("select-search__input");
+    // выпадающий список станций
     private final By listStation = By.className("select-search__select");
-    private final By fieldTelephone = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[5]/input");
-    private final By buttonNext = By.xpath("//*[@id=\"root\"]/div/div[2]/div[3]/button");
+    // поле Телефон
+    private final By fieldTelephone = By.cssSelector("input[placeholder='* Телефон: на него позвонит курьер']");
+    // кнопка Далее формы Для кого самокат
+    private final By buttonNext = By.className("Button_Middle__1CSJM");
 
     public FormAboutUser(WebDriver driver) {
         this.driver = driver;
