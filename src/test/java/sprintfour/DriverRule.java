@@ -35,9 +35,14 @@ public class DriverRule extends ExternalResource {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
+    public void openMainPage() {
+        driver.get("https://qa-scooter.praktikum-services.ru/");
+    }
+
     @Override
     protected void before() {
         initDriver();
+        openMainPage();
     }
 
     @Override

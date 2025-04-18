@@ -1,31 +1,44 @@
 package sprintfour;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.junit.Rule;
 
-import java.time.Duration;
 
+@RunWith(Parameterized.class)
 public class TestFAQ {
+    private final String questionId;
+    private final String answerId;
+
+    public TestFAQ(String questionId, String answerId) {
+        this.questionId = questionId;
+        this.answerId = answerId;
+    }
+
+    @Parameterized.Parameters
+    public static Object[][] getFAQData() {
+        return new Object[][]{
+                {"accordion__heading-0", "accordion__panel-0"},
+                {"accordion__heading-1", "accordion__panel-1"},
+                {"accordion__heading-2", "accordion__panel-2"},
+                {"accordion__heading-3", "accordion__panel-3"},
+                {"accordion__heading-4", "accordion__panel-4"},
+                {"accordion__heading-5", "accordion__panel-5"},
+                {"accordion__heading-6", "accordion__panel-6"},
+                {"accordion__heading-7", "accordion__panel-7"}
+        };
+    }
+
     @Rule
     public DriverRule driverRule = new DriverRule();
 
     @Test
-    public void checkQuestionFAQ() {
+    public void checkFAQ() {
         WebDriver driver = driverRule.getDriver();
         var mainPage = new MainPage(driver);
-
-        // Открываем страницу
-        mainPage.openMainPage();
-
-        // Нажимаем куки
         mainPage.clickCookie();
-
-        // Проверяем соответствие вопросов и ответов
-        mainPage.checkQuestionAnswerMatch();
+        mainPage.checkFAQQuestion(questionId, answerId); // Используем параметры из конструктора
     }
 }

@@ -40,11 +40,7 @@ public class TestOrderFrame { // флоу верхней кнопки "Зака�
         var mainPage = new MainPage(driver);
         var formAboutUser = new FormAboutUser(driver);
         var formAboutRent = new FormAboutRent(driver);
-
-        // открываем страницу
-        mainPage.openMainPage();
-        // принимаем куки
-        mainPage.clickCookie(); // может это лишнее...
+        mainPage.clickCookie();
 
         if (buttonType.equals("up")) {
             mainPage.clickButtonOrderUp();

@@ -13,18 +13,18 @@ import static org.junit.Assert.assertTrue;
 public class FormAboutRent {
     private final WebDriver driver;
     // поле Дата(не могу понять почему через class и cssSelector не находит, хотя на странице и то и другое уникальны)
-    // private final By fieldDate = By.cssSelector("input[placeholder='* Когда привезут самокат']");
-    private final By fieldDate = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[1]/div[1]/div/input");
+    private final By fieldDate = By.cssSelector("input[placeholder='* Когда привезти самокат']");
+    //private final By fieldDate = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[1]/div[1]/div/input");
     // календарь
     private final By deskDate = By.className("react-datepicker__day--018");
     // поле Срок аренды
     private final By fieldRent = By.className("Dropdown-placeholder");
     // список Срока аренды
-    private final By listRent = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[2]/div[2]/div[1]");
+    private final By listRent = By.xpath("//*[contains(text(),'сутки')]");
     // кнопка Заказать формы Про аренду
-    private final By buttonOrderForm = By.xpath("//*[@id=\"root\"]/div/div[2]/div[3]/button[2]");
+    private final By buttonOrderForm = By.xpath(".//div[@class='Order_Buttons__1xGrp']//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
     // кнопка Да формы Про аренду
-    private final By buttonYes = By.xpath("//*[@id=\"root\"]/div/div[2]/div[5]/div[2]/button[2]");
+    private final By buttonYes = By.xpath(".//div[@class='Order_Modal__YZ-d3']//button[2]");
 
     public FormAboutRent(WebDriver driver) {
         this.driver = driver;
