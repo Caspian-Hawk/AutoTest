@@ -9,15 +9,22 @@ import java.time.Duration;
 
 import static org.junit.Assert.assertTrue;
 
+// локаторы для формы Про аренду
 public class FormAboutRent {
     private final WebDriver driver;
-
-    private final By fieldDate = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[1]/div[1]/div/input");
-    private final By deskDate = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[1]/div[2]/div[2]/div/div/div[2]/div[2]/div[3]/div[4]");
+    // поле Дата(не могу понять почему через class и cssSelector не находит, хотя на странице и то и другое уникальны)
+    private final By fieldDate = By.cssSelector("input[placeholder='* Когда привезти самокат']");
+    //private final By fieldDate = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[1]/div[1]/div/input");
+    // календарь
+    private final By deskDate = By.className("react-datepicker__day--018");
+    // поле Срок аренды
     private final By fieldRent = By.className("Dropdown-placeholder");
-    private final By listRent = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[2]/div[2]/div[1]");
-    private final By buttonOrderForm = By.xpath("//*[@id=\"root\"]/div/div[2]/div[3]/button[2]");
-    private final By buttonYes = By.xpath("//*[@id=\"root\"]/div/div[2]/div[5]/div[2]/button[2]");
+    // список Срока аренды
+    private final By listRent = By.xpath("//*[contains(text(),'сутки')]");
+    // кнопка Заказать формы Про аренду
+    private final By buttonOrderForm = By.xpath(".//div[@class='Order_Buttons__1xGrp']//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
+    // кнопка Да формы Про аренду
+    private final By buttonYes = By.xpath(".//div[@class='Order_Modal__YZ-d3']//button[2]");
 
     public FormAboutRent(WebDriver driver) {
         this.driver = driver;
@@ -42,8 +49,8 @@ public class FormAboutRent {
     }
 
     public void checkOrderComplete() {
-        By orderComplete = By.xpath("/html/body/div/div/div[2]/div[5]");
-        // ждем, на всякий случай
+        By orderComplete = By.className("Order_ModalHeader__3FDaJ");
+        // ждем, на всякий случай...
         new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(orderComplete));
         // проверяем окно Заказ оформлен
         assertTrue(driver.findElement(orderComplete).isDisplayed());

@@ -54,7 +54,7 @@ public class TestButtonOrderDown { // флоу нижней кнопки "Зак
         //MainPage.open();
         mainPage.openMainPage();
         // принимаем куки
-        mainPage.clickCookie();
+        mainPage.clickCookie(); // может это лишнее...
 
         // кликаем по верхней кнопке Заказать
         mainPage.clickButtonOrderDown();
